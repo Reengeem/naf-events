@@ -4,7 +4,7 @@ require("express-async-errors");
 const express = require("express");
 const cors = require("cors");
 const app = express();
-const PORT = 5000;
+const PORT = process.env.PORT || 5000;
 
 // custom middleware
 const { routeNotFoundMiddleware } = require("./middleware/routeNotFound");
@@ -21,26 +21,27 @@ const eventRoutes = require("./route/eventRoute");
 // middlewares
 
 const allowedOrigins = [
-  'https://naf-events.vercel.app',
-  'http://localhost:5173',
+  "https://naf-events.vercel.app",
+  "http://localhost:5173",
 ];
 // middleware
 app.use(function (req, res, next) {
   const origin = req.headers.origin;
 
   if (allowedOrigins.includes(origin)) {
-    res.setHeader('Access-Control-Allow-Origin', origin);
+    res.setHeader("Access-Control-Allow-Origin", origin);
   }
   res.setHeader(
-    'Access-Control-Allow-Methods',
-    'GET, POST, OPTIONS, PUT, PATCH, DELETE'
+    "Access-Control-Allow-Methods",
+    "GET, POST, OPTIONS, PUT, PATCH, DELETE"
   );
   res.setHeader(
-    'Access-Control-Allow-Headers',
-    'X-Requested-With,content-type, authorization'
+    "Access-Control-Allow-Headers",
+    "X-Requested-With,content-type, authorization"
   );
-  res.setHeader('Access-Control-Allow-Credentials', true);
-  next()})
+  res.setHeader("Access-Control-Allow-Credentials", true);
+  next();
+});
 
 app.use(express.json());
 // Middleware to parse urlencoded form data
