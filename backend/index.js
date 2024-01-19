@@ -19,7 +19,29 @@ const { connectDB } = require("./config/dbConnect");
 const authRoutes = require("./route/authRoute");
 const eventRoutes = require("./route/eventRoute");
 // middlewares
-app.use(cors());
+
+const allowedOrigins = [
+  'https://naf-events.vercel.app',
+  'http://localhost:5173',
+];
+// middleware
+app.use(function (req, res, next) {
+  const origin = req.headers.origin;
+
+  if (allowedOrigins.includes(origin)) {
+    res.setHeader('Access-Control-Allow-Origin', origin);
+  }
+  res.setHeader(
+    'Access-Control-Allow-Methods',
+    'GET, POST, OPTIONS, PUT, PATCH, DELETE'
+  );
+  res.setHeader(
+    'Access-Control-Allow-Headers',
+    'X-Requested-With,content-type, authorization'
+  );
+  res.setHeader('Access-Control-Allow-Credentials', true);
+  next()})
+
 app.use(express.json());
 // Middleware to parse urlencoded form data
 app.use(express.urlencoded({ extended: true }));
