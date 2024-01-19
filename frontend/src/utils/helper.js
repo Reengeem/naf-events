@@ -1,4 +1,4 @@
-export const backendUrl = "http://localhost:5000/api/v1";
+export const backendUrl = "https://naf-events.onrender.com/api/v1";
 
 export const naf_branch = [
   {
